@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Quest | Aprendizaje gamificado de inglés</title>
+    <style>
+        :root {
+            --bg: #08111f;
+            --panel: #101c30;
+            --panel2: #162640;
+            --text: #f5f7fb;
+            --muted: #a9b6ca;
+            --accent: #7c5cff;
+            --green: #25d0a6;
+            --yellow: #ffd166;
+            --red: #ff6b7a;
+            --line: #2b3b5b
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, Arial, sans-serif;
+            background: radial-gradient(circle at top right, #20345e 0, #08111f 48%);
+            color: var(--text);
+            min-height: 100vh
+        }
+
+        header {
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--line);
+            background: #08111fcc;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 900
+        }
+
+        .logo span {
+            color: var(--green)
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .stat {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: 9px 13px;
+            border-radius: 12px;
+            font-weight: 800
+        }
+
+        main {
+            max-width: 1150px;
+            margin: auto;
+            padding: 36px 20px 60px
+        }
+
+        .screen {
+            display: none
+        }
+
+        .screen.active {
+            display: block
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 24px
+        }
+
+        .card {
+            background: linear-gradient(145deg, #162640f7, #0d182bf7);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px #0004
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 6vw, 5rem);
+            line-height: .95;
+            margin: 0 0 18px
+        }
+
+        h1 span {
+            color: var(--green)
+        }
+
+        h2 {
+            margin: 0 0 16px
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.7
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #241d54;
+            color: #cfc8ff;
+            font-weight: 800;
+            margin-bottom: 18px
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 13px;
+            padding: 13px 18px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .primary {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .secondary {
+            background: #263653;
+            color: #fff
+        }
+
+        .success {
+            background: var(--green);
+            color: #07151a
+        }
+
+        .warning {
+            background: var(--yellow);
+            color: #201b08
+        }
+
+        .progress-wrap {
+            margin: 24px 0
+        }
+
+        .progress {
+            height: 12px;
+            background: #263653;
+            border-radius: 20px;
+            overflow: hidden
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            transition: .4s
+        }
+
+        .mission-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px
+        }
+
+        .mission {
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #0d192c;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .mission:hover {
+            transform: translateY(-3px)
+        }
+
+        .mission.active {
+            border-color: var(--green);
+            box-shadow: 0 0 0 2px #25d0a61c
+        }
+
+        .mission.locked {
+            opacity: .42;
+            cursor: not-allowed
+        }
+
+        .icon {
+            font-size: 2.5rem
+        }
+
+        .small {
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 22px
+        }
+
+        .module {
+            padding: 22px;
+            border-radius: 18px;
+            background: #0d192c;
+            border: 1px solid var(--line);
+            transition: .2s
+        }
+
+        .module:hover {
+            transform: translateY(-4px);
+            border-color: var(--green)
+        }
+
+        .module-icon {
+            font-size: 2.7rem
+        }
+
+        .module h3 {
+            margin: 12px 0 8px
+        }
+
+        .module p {
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        .module .btn {
+            margin-top: 8px
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap
+        }
+
+        .question {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin: 20px 0
+        }
+
+        .answers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .answer {
+            background: #172640;
+            color: #fff;
+            border: 1px solid #35496d;
+            padding: 16px;
+            border-radius: 14px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer
+        }
+
+        .answer:hover {
+            border-color: var(--green)
+        }
+
+        .answer.correct {
+            background: #123f36;
+            border-color: var(--green)
+        }
+
+        .answer.wrong {
+            background: #48232d;
+            border-color: var(--red)
+        }
+
+        .feedback {
+            min-height: 32px;
+            margin: 18px 0;
+            font-weight: 800
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 650px;
+            margin: 22px auto
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            border: 0;
+            border-radius: 15px;
+            background: #263653;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            font-weight: 900;
+            font-size: clamp(15px, 2vw, 20px);
+        }
+
+        .memory-card.flipped,
+        .memory-card.matched {
+            background: #123f36;
+            border: 2px solid var(--green)
+        }
+
+        .memory-card.matched {
+            opacity: .75
+        }
+
+        .match-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-top: 22px
+        }
+
+        .word-list,
+        .definition-list {
+            display: grid;
+            gap: 12px
+        }
+
+        .match-item {
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid #35496d;
+            background: #172640;
+            cursor: pointer;
+            font-weight: 700
+        }
+
+        .match-item.selected {
+            border-color: var(--yellow);
+            background: #3d351b
+        }
+
+        .match-item.matched {
+            border-color: var(--green);
+            background: #123f36;
+            opacity: .7;
+            cursor: default
+        }
+
+        .result {
+            text-align: center;
+            padding: 25px
+        }
+
+        .trophy {
+            font-size: 5rem
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 30px
+        }
+
+        .center {
+            text-align: center
+        }
+
+        .mission-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .mission-badge.completed {
+            background: var(--green);
+            color: #07151a;
+        }
+
+        .mission-badge.locked {
+            background: #48232d;
+            color: #ff6b7a;
+        }
+
+        .mission-badge.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        @media(max-width:850px) {
+            .hero {
+                grid-template-columns: 1fr
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr
+            }
+
+            .mission-list {
+                grid-template-columns: 1fr
+            }
+
+            .answers,
+            .match-area {
+                grid-template-columns: 1fr
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(4, 1fr)
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">🎮 English <span>Quest</span></div>
+        <div class="stats">
+            <div class="stat">⭐ <span id="xp">0</span> XP</div>
+            <div class="stat">❤️ <span id="lives">3</span></div>
+            <div class="stat">🏆 Nivel <span id="level">1</span></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HOME -->
+        <section id="home" class="screen active">
+            <div class="hero">
+                <div class="card">
+                    <div class="badge">🚀 MISIÓN 01 · PRINCIPIANTE</div>
+                    <h1>Aprende inglés.<br><span>Sube de nivel.</span></h1>
+                    <p class="subtitle">Completa misiones interactivas y juega tres módulos de aprendizaje diferentes
+                        para mejorar tu vocabulario y comprensión del inglés.</p>
+                    <button class="btn primary" onclick="showScreen('modules')">Comenzar misión ✈️</button>
+                    <div class="progress-wrap">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Progreso
+                                general</b><span id="overallText">0%</span></div>
+                        <div class="progress">
+                            <div class="progress-bar" id="overallBar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>🗺️ Mapa de misiones</h2>
+                    <div class="mission-list">
+                        <div class="mission active" onclick="showMission('airport')">
+                            <div class="icon">✈️</div>
+                            <b>En el aeropuerto</b>
+                            <p class="small">3 módulos · 300 XP</p>
+                            <span class="mission-badge active">▶ Activa</span>
+                        </div>
+                        <div class="mission locked" id="missionHotel">
+                            <div class="icon">🏨</div>
+                            <b>En el hotel</b>
+                            <p class="small">🔒 Completa la misión 01</p>
+                            <span class="mission-badge locked">🔒 Bloqueada</span>
+                        </div>
+                        <div class="mission locked" id="missionRestaurant">
+                            <div class="icon">🍽️</div>
+                            <b>En el restaurante</b>
+                            <p class="small">🔒 Completa la misión 01</p>
+                            <span class="mission-badge locked">🔒 Bloqueada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULOS DEL AEROPUERTO -->
+        <section id="modules" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">✈️ MISIÓN 01 · EN EL AEROPUERTO</div>
+                        <h2>Elige tu desafío de aprendizaje</h2>
+                        <p class="subtitle">Completa los tres módulos para finalizar la misión y ganar hasta 300 XP.</p>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('home')">← Inicio</button>
+                </div>
+                <div class="module-grid">
+                    <div class="module">
+                        <div class="module-icon">🧠</div>
+                        <h3>Trivia</h3>
+                        <p>Pon a prueba tu conocimiento del inglés con preguntas de opción múltiple y retroalimentación
+                            instantánea.</p>
+                        <button class="btn primary" onclick="startTrivia()">Jugar trivia · 100 XP</button>
+                    </div>
+                    <div class="module">
+                        <div class="module-icon">🃏</div>
+                        <h3>Juego de memoria</h3>
+                        <p>Empareja el vocabulario del aeropuerto en inglés con su traducción al español.</p>
+                        <button class="btn primary" onclick="startMemory()">Jugar memoria · 100 XP</button>
+                    </div>
+                    <div class="module">
+                        <div class="module-icon">🔤</div>
+                        <h3>Emparejar palabras</h3>
+                        <p>Conecta las palabras en inglés con sus significados correctos para completar el desafío.</p>
+                        <button class="btn primary" onclick="startMatch()">Jugar emparejar · 100 XP</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULOS DEL HOTEL -->
+        <section id="modulesHotel" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🏨 MISIÓN 02 · EN EL HOTEL</div>
+                        <h2>Desafíos del hotel</h2>
+                        <p class="subtitle">Aprende vocabulario relacionado con hoteles, reservas y servicios.</p>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('home')">← Inicio</button>
+                </div>
+                <div class="module-grid">
+                    <div class="module">
+                        <div class="module-icon">🧠</div>
+                        <h3>Trivia del hotel</h3>
+                        <p>Preguntas sobre vocabulario y situaciones en un hotel.</p>
+                        <button class="btn primary" onclick="startHotelTrivia()">Jugar trivia · 100 XP</button>
+                    </div>
+                    <div class="module">
+                        <div class="module-icon">🃏</div>
+                        <h3>Memoria del hotel</h3>
+                        <p>Empareja vocabulario del hotel en inglés con su traducción.</p>
+                        <button class="btn primary" onclick="startHotelMemory()">Jugar memoria · 100 XP</button>
+                    </div>
+                    <div class="module">
+                        <div class="module-icon">🔤</div>
+                        <h3>Emparejar palabras del hotel</h3>
+                        <p>Conecta palabras del hotel con sus significados.</p>
+                        <button class="btn primary" onclick="startHotelMatch()">Jugar emparejar · 100 XP</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRIVIA AEROPUERTO -->
+        <section id="trivia" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🧠 MÓDULO 1 · TRIVIA</div>
+                        <h2 id="triviaNumber">Pregunta 1 de 5</h2>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modules')">← Módulos</button>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="triviaProgress"></div>
+                </div>
+                <div class="question" id="triviaQuestion"></div>
+                <div class="answers" id="triviaAnswers"></div>
+                <div class="feedback" id="triviaFeedback"></div>
+                <button id="triviaNext" class="btn success" style="display:none" onclick="nextTrivia()">Siguiente
+                    pregunta →</button>
+            </div>
+        </section>
+
+        <!-- TRIVIA HOTEL -->
+        <section id="triviaHotel" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🧠 TRIVIA DEL HOTEL</div>
+                        <h2 id="triviaHotelNumber">Pregunta 1 de 5</h2>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modulesHotel')">← Módulos</button>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="triviaHotelProgress"></div>
+                </div>
+                <div class="question" id="triviaHotelQuestion"></div>
+                <div class="answers" id="triviaHotelAnswers"></div>
+                <div class="feedback" id="triviaHotelFeedback"></div>
+                <button id="triviaHotelNext" class="btn success" style="display:none" onclick="nextHotelTrivia()">Siguiente
+                    pregunta →</button>
+            </div>
+        </section>
+
+        <!-- MEMORY AEROPUERTO -->
+        <section id="memory" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🃏 MÓDULO 2 · JUEGO DE MEMORIA</div>
+                        <h2>Encuentra las parejas</h2>
+                        <p class="subtitle">Encuentra cada palabra en inglés y su traducción al español.</p>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modules')">← Módulos</button>
+                </div>
+                <div class="memory-grid" id="memoryGrid"></div>
+                <p class="center" id="memoryStatus"></p>
+            </div>
+        </section>
+
+        <!-- MEMORY HOTEL -->
+        <section id="memoryHotel" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🃏 MEMORIA DEL HOTEL</div>
+                        <h2>Encuentra las parejas del hotel</h2>
+                        <p class="subtitle">Encuentra cada palabra en inglés y su traducción al español.</p>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modulesHotel')">← Módulos</button>
+                </div>
+                <div class="memory-grid" id="memoryHotelGrid"></div>
+                <p class="center" id="memoryHotelStatus"></p>
+            </div>
+        </section>
+
+        <!-- MATCH AEROPUERTO -->
+        <section id="match" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🔤 MÓDULO 3 · EMPAREJAR PALABRAS</div>
+                        <h2>Empareja cada palabra con su significado</h2>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modules')">← Módulos</button>
+                </div>
+                <div class="match-area">
+                    <div>
+                        <h3>Palabras en inglés</h3>
+                        <div class="word-list" id="wordList"></div>
+                    </div>
+                    <div>
+                        <h3>Significados</h3>
+                        <div class="definition-list" id="definitionList"></div>
+                    </div>
+                </div>
+                <p class="feedback" id="matchFeedback"></p>
+            </div>
+        </section>
+
+        <!-- MATCH HOTEL -->
+        <section id="matchHotel" class="screen">
+            <div class="card">
+                <div class="topbar">
+                    <div>
+                        <div class="badge">🔤 EMPAREJAR DEL HOTEL</div>
+                        <h2>Empareja cada palabra del hotel con su significado</h2>
+                    </div>
+                    <button class="btn secondary" onclick="showScreen('modulesHotel')">← Módulos</button>
+                </div>
+                <div class="match-area">
+                    <div>
+                        <h3>Palabras en inglés</h3>
+                        <div class="word-list" id="wordListHotel"></div>
+                    </div>
+                    <div>
+                        <h3>Significados</h3>
+                        <div class="definition-list" id="definitionListHotel"></div>
+                    </div>
+                </div>
+                <p class="feedback" id="matchHotelFeedback"></p>
+            </div>
+        </section>
+
+        <!-- COMPLETE -->
+        <section id="complete" class="screen">
+            <div class="card result">
+                <div class="trophy">🏆</div>
+                <h1>Misión <span>completada!</span></h1>
+                <p class="subtitle">¡Excelente trabajo! Completaste los tres módulos de English Quest.</p>
+                <h2>⭐ <span id="finalScore">0</span> XP ganados</h2>
+                <p id="completionMessage"></p>
+                <button class="btn primary" onclick="showScreen('home')">Volver al mapa de misiones</button>
+            </div>
+        </section>
+    </main>
+
+    <div class="footer">English Quest · Prototipo de experiencia gamificada para aprender inglés</div>
+
+    <script>
+        // ===== STATE =====
+        let xp = 0;
+        let lives = 3;
+        
+        // Estado de misiones
+        const missions = {
+            airport: { completed: false, modules: { trivia: false, memory: false, match: false } },
+            hotel: { unlocked: false, completed: false, modules: { trivia: false, memory: false, match: false } },
+            restaurant: { unlocked: false, completed: false, modules: { trivia: false, memory: false, match: false } }
+        };
+
+        // ===== NAVEGACIÓN DE MISIONES =====
+        function showMission(missionId) {
+            if (missionId === 'airport') {
+                showScreen('modules');
+            } else if (missionId === 'hotel' && missions.hotel.unlocked) {
+                showScreen('modulesHotel');
+            } else if (missionId === 'restaurant' && missions.restaurant.unlocked) {
+                alert('🍽️ ¡Misión del Restaurante desbloqueada! Próximamente con nuevo contenido.');
+            } else {
+                alert('🔒 Esta misión aún está bloqueada. Completa la misión anterior para desbloquearla.');
+            }
+        }
+
+        // ===== UI HELPERS =====
+        function updateStats() {
+            document.getElementById('xp').textContent = xp;
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('level').textContent = Math.max(1, Math.floor(xp / 100) + 1);
+            
+            const totalModules = 3; // Solo contamos la primera misión para el progreso general
+            const completedModules = Object.values(missions.airport.modules).filter(Boolean).length;
+            const pct = Math.round((completedModules / totalModules) * 100);
+            document.getElementById('overallText').textContent = pct + '%';
+            document.getElementById('overallBar').style.width = pct + '%';
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function completeModule(missionId, moduleName) {
+            if (!missions[missionId].modules[moduleName]) {
+                missions[missionId].modules[moduleName] = true;
+                xp += 100;
+                updateStats();
+                
+                // Verificar si completó todos los módulos de la misión
+                const allModulesCompleted = Object.values(missions[missionId].modules).every(Boolean);
+                if (allModulesCompleted) {
+                    missions[missionId].completed = true;
+                    
+                    // Desbloquear siguiente misión
+                    if (missionId === 'airport') {
+                        unlockMission('hotel');
+                    } else if (missionId === 'hotel') {
+                        unlockMission('restaurant');
+                    }
+                    
+                    document.getElementById('finalScore').textContent = xp;
+                    document.getElementById('completionMessage').textContent = 
+                        `¡Has completado la misión "${missionId === 'airport' ? 'En el aeropuerto' : 'En el hotel'}"! ${missionId === 'airport' ? 'La misión del hotel ha sido desbloqueada.' : '¡Sigue así!'}`;
+                    showScreen('complete');
+                } else {
+                    // Volver a la pantalla de módulos de la misión correspondiente
+                    if (missionId === 'airport') {
+                        showScreen('modules');
+                    } else if (missionId === 'hotel') {
+                        showScreen('modulesHotel');
+                    }
+                }
+            }
+        }
+
+        function unlockMission(missionId) {
+            if (missionId === 'hotel') {
+                missions.hotel.unlocked = true;
+                const hotelMission = document.getElementById('missionHotel');
+                hotelMission.classList.remove('locked');
+                hotelMission.classList.add('active');
+                hotelMission.querySelector('.small').textContent = '3 módulos · 300 XP';
+                hotelMission.querySelector('.mission-badge').className = 'mission-badge active';
+                hotelMission.querySelector('.mission-badge').textContent = '▶ Disponible';
+                
+                // Cambiar el onclick para que abra la misión
+                hotelMission.onclick = function(e) {
+                    e.stopPropagation();
+                    showMission('hotel');
+                };
+                
+                alert('🏨 ¡Misión del Hotel desbloqueada! Haz clic en ella para comenzar.');
+            } else if (missionId === 'restaurant') {
+                missions.restaurant.unlocked = true;
+                const restaurantMission = document.getElementById('missionRestaurant');
+                restaurantMission.classList.remove('locked');
+                restaurantMission.classList.add('active');
+                restaurantMission.querySelector('.small').textContent = '3 módulos · 300 XP';
+                restaurantMission.querySelector('.mission-badge').className = 'mission-badge active';
+                restaurantMission.querySelector('.mission-badge').textContent = '▶ Disponible';
+                
+                restaurantMission.onclick = function(e) {
+                    e.stopPropagation();
+                    showMission('restaurant');
+                };
+                
+                alert('🍽️ ¡Misión del Restaurante desbloqueada! Haz clic en ella para comenzar.');
+            }
+        }
+
+        // ===== TRIVIA AEROPUERTO =====
+        const triviaAirport = [
+            {
+                q: 'What is the correct word for "documento de identidad" in English?',
+                a: ['Passport', 'ID card', 'Driver license', 'Visa'],
+                c: 1
+            },
+            {
+                q: 'Which phrase means "hacer el check-in" in English?',
+                a: ['Check out', 'Boarding', 'Landing', 'Check in'],
+                c: 3
+            },
+            {
+                q: 'What do you say to ask for the price of something?',
+                a: ['What is it?', 'How much is it?', 'Where is it?', 'When is it?'],
+                c: 1
+            },
+            {
+                q: 'Complete: "I would like to ___ a ticket."',
+                a: ['sell', 'rent', 'buy', 'borrow'],
+                c: 2
+            },
+            {
+                q: 'What is the opposite of "arrival"?',
+                a: ['Departure', 'Delay', 'Destination', 'Flight'],
+                c: 0
+            }
+        ];
+        let triviaIndex = 0;
+        let triviaAnswered = false;
+
+        function startTrivia() {
+            triviaIndex = 0;
+            showScreen('trivia');
+            renderTrivia();
+        }
+
+        function renderTrivia() {
+            triviaAnswered = false;
+            const q = triviaAirport[triviaIndex];
+            document.getElementById('triviaNumber').textContent = `Pregunta ${triviaIndex + 1} de ${triviaAirport.length}`;
+            document.getElementById('triviaQuestion').textContent = q.q;
+            document.getElementById('triviaFeedback').textContent = '';
+            document.getElementById('triviaNext').style.display = 'none';
+            document.getElementById('triviaProgress').style.width = ((triviaIndex / triviaAirport.length) * 100) + '%';
+
+            const box = document.getElementById('triviaAnswers');
+            box.innerHTML = '';
+            q.a.forEach((text, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer';
+                btn.textContent = text;
+                btn.onclick = () => handleTriviaAnswer(i, btn);
+                box.appendChild(btn);
+            });
+        }
+
+        function handleTriviaAnswer(index, btn) {
+            if (triviaAnswered) return;
+            triviaAnswered = true;
+
+            const q = triviaAirport[triviaIndex];
+            const allBtns = document.querySelectorAll('#triviaAnswers .answer');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (index === q.c) {
+                btn.classList.add('correct');
+                document.getElementById('triviaFeedback').textContent = '✅ ¡Correcto!';
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.c].classList.add('correct');
+                lives = Math.max(0, lives - 1);
+                updateStats();
+                document.getElementById('triviaFeedback').textContent = '💡 ¡Sigue aprendiendo! La respuesta correcta estaba resaltada.';
+            }
+            document.getElementById('triviaNext').style.display = 'inline-block';
+        }
+
+        function nextTrivia() {
+            triviaIndex++;
+            if (triviaIndex < triviaAirport.length) {
+                renderTrivia();
+            } else {
+                completeModule('airport', 'trivia');
+            }
+        }
+
+        // ===== TRIVIA HOTEL =====
+        const triviaHotelData = [
+            {
+                q: 'What is "recepcionista" in English?',
+                a: ['Receptionist', 'Manager', 'Waiter', 'Porter'],
+                c: 0
+            },
+            {
+                q: 'How do you say "reservación" in English?',
+                a: ['Booking', 'Check-in', 'Reservation', 'Room service'],
+                c: 2
+            },
+            {
+                q: 'What do you ask for if you need towels?',
+                a: ['Towels, please', 'Soap, please', 'Blankets, please', 'Pillows, please'],
+                c: 0
+            },
+            {
+                q: 'Complete: "I would like to ___ a room."',
+                a: ['book', 'sell', 'clean', 'paint'],
+                c: 0
+            },
+            {
+                q: 'What is "la cuenta" in English?',
+                a: ['Bill', 'Check', 'Receipt', 'All of the above'],
+                c: 3
+            }
+        ];
+        let triviaHotelIndex = 0;
+        let triviaHotelAnswered = false;
+
+        function startHotelTrivia() {
+            triviaHotelIndex = 0;
+            showScreen('triviaHotel');
+            renderHotelTrivia();
+        }
+
+        function renderHotelTrivia() {
+            triviaHotelAnswered = false;
+            const q = triviaHotelData[triviaHotelIndex];
+            document.getElementById('triviaHotelNumber').textContent = `Pregunta ${triviaHotelIndex + 1} de ${triviaHotelData.length}`;
+            document.getElementById('triviaHotelQuestion').textContent = q.q;
+            document.getElementById('triviaHotelFeedback').textContent = '';
+            document.getElementById('triviaHotelNext').style.display = 'none';
+            document.getElementById('triviaHotelProgress').style.width = ((triviaHotelIndex / triviaHotelData.length) * 100) + '%';
+
+            const box = document.getElementById('triviaHotelAnswers');
+            box.innerHTML = '';
+            q.a.forEach((text, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer';
+                btn.textContent = text;
+                btn.onclick = () => handleHotelTriviaAnswer(i, btn);
+                box.appendChild(btn);
+            });
+        }
+
+        function handleHotelTriviaAnswer(index, btn) {
+            if (triviaHotelAnswered) return;
+            triviaHotelAnswered = true;
+
+            const q = triviaHotelData[triviaHotelIndex];
+            const allBtns = document.querySelectorAll('#triviaHotelAnswers .answer');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (index === q.c) {
+                btn.classList.add('correct');
+                document.getElementById('triviaHotelFeedback').textContent = '✅ ¡Correcto!';
+            } else {
+                btn.classList.add('wrong');
+                allBtns[q.c].classList.add('correct');
+                lives = Math.max(0, lives - 1);
+                updateStats();
+                document.getElementById('triviaHotelFeedback').textContent = '💡 ¡Sigue aprendiendo! La respuesta correcta estaba resaltada.';
+            }
+            document.getElementById('triviaHotelNext').style.display = 'inline-block';
+        }
+
+        function nextHotelTrivia() {
+            triviaHotelIndex++;
+            if (triviaHotelIndex < triviaHotelData.length) {
+                renderHotelTrivia();
+            } else {
+                completeModule('hotel', 'trivia');
+            }
+        }
+
+        // ===== MEMORY AEROPUERTO =====
+        const airportPairs = [
+            ['Airport', 'Aeropuerto'],
+            ['Ticket', 'Boleto'],
+            ['Luggage', 'Equipaje'],
+            ['Gate', 'Puerta de embarque'],
+            ['Flight', 'Vuelo'],
+            ['Passport', 'Pasaporte']
+        ];
+        let memoryCards = [];
+        let firstCard = null;
+        let secondCard = null;
+        let memoryLock = false;
+        let matchedPairs = 0;
+
+        function startMemory() {
+            showScreen('memory');
+            memoryCards = [];
+            firstCard = null;
+            secondCard = null;
+            memoryLock = false;
+            matchedPairs = 0;
+
+            const data = [];
+            airportPairs.forEach((p, i) => {
+                data.push({ id: i, text: p[0] });
+                data.push({ id: i, text: p[1] });
+            });
+            memoryCards = data.sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            document.getElementById('memoryStatus').textContent = 'Encuentra las 6 parejas.';
+
+            memoryCards.forEach((card, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'memory-card';
+                btn.textContent = '?';
+                btn.dataset.index = i;
+                btn.onclick = () => flipMemoryCard(btn, i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function flipMemoryCard(btn, index) {
+            if (memoryLock || btn.classList.contains('flipped') || btn.classList.contains('matched')) return;
+
+            btn.classList.add('flipped');
+            btn.textContent = memoryCards[index].text;
+
+            if (!firstCard) {
+                firstCard = { element: btn, index };
+                return;
+            }
+
+            secondCard = { element: btn, index };
+            memoryLock = true;
+
+            if (memoryCards[firstCard.index].id === memoryCards[secondCard.index].id) {
+                firstCard.element.classList.add('matched');
+                secondCard.element.classList.add('matched');
+                matchedPairs++;
+                firstCard = null;
+                secondCard = null;
+                memoryLock = false;
+
+                if (matchedPairs === airportPairs.length) {
+                    document.getElementById('memoryStatus').textContent = '🎉 ¡Encontraste todas las parejas!';
+                    setTimeout(() => completeModule('airport', 'memory'), 700);
+                }
+            } else {
+                setTimeout(() => {
+                    firstCard.element.classList.remove('flipped');
+                    secondCard.element.classList.remove('flipped');
+                    firstCard.element.textContent = '?';
+                    secondCard.element.textContent = '?';
+                    firstCard = null;
+                    secondCard = null;
+                    memoryLock = false;
+                }, 850);
+            }
+        }
+
+        // ===== MEMORY HOTEL =====
+        const hotelPairs = [
+            ['Hotel', 'Hotel'],
+            ['Room', 'Habitación'],
+            ['Reservation', 'Reservación'],
+            ['Key', 'Llave'],
+            ['Lobby', 'Vestíbulo'],
+            ['Breakfast', 'Desayuno']
+        ];
+        let memoryHotelCards = [];
+        let firstHotelCard = null;
+        let secondHotelCard = null;
+        let memoryHotelLock = false;
+        let matchedHotelPairs = 0;
+
+        function startHotelMemory() {
+            showScreen('memoryHotel');
+            memoryHotelCards = [];
+            firstHotelCard = null;
+            secondHotelCard = null;
+            memoryHotelLock = false;
+            matchedHotelPairs = 0;
+
+            const data = [];
+            hotelPairs.forEach((p, i) => {
+                data.push({ id: i, text: p[0] });
+                data.push({ id: i, text: p[1] });
+            });
+            memoryHotelCards = data.sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('memoryHotelGrid');
+            grid.innerHTML = '';
+            document.getElementById('memoryHotelStatus').textContent = 'Encuentra las 6 parejas del hotel.';
+
+            memoryHotelCards.forEach((card, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'memory-card';
+                btn.textContent = '?';
+                btn.dataset.index = i;
+                btn.onclick = () => flipHotelMemoryCard(btn, i);
+                grid.appendChild(btn);
+            });
+        }
+
+        function flipHotelMemoryCard(btn, index) {
+            if (memoryHotelLock || btn.classList.contains('flipped') || btn.classList.contains('matched')) return;
+
+            btn.classList.add('flipped');
+            btn.textContent = memoryHotelCards[index].text;
+
+            if (!firstHotelCard) {
+                firstHotelCard = { element: btn, index };
+                return;
+            }
+
+            secondHotelCard = { element: btn, index };
+            memoryHotelLock = true;
+
+            if (memoryHotelCards[firstHotelCard.index].id === memoryHotelCards[secondHotelCard.index].id) {
+                firstHotelCard.element.classList.add('matched');
+                secondHotelCard.element.classList.add('matched');
+                matchedHotelPairs++;
+                firstHotelCard = null;
+                secondHotelCard = null;
+                memoryHotelLock = false;
+
+                if (matchedHotelPairs === hotelPairs.length) {
+                    document.getElementById('memoryHotelStatus').textContent = '🎉 ¡Encontraste todas las parejas!';
+                    setTimeout(() => completeModule('hotel', 'memory'), 700);
+                }
+            } else {
+                setTimeout(() => {
+                    firstHotelCard.element.classList.remove('flipped');
+                    secondHotelCard.element.classList.remove('flipped');
+                    firstHotelCard.element.textContent = '?';
+                    secondHotelCard.element.textContent = '?';
+                    firstHotelCard = null;
+                    secondHotelCard = null;
+                    memoryHotelLock = false;
+                }, 850);
+            }
+        }
+
+        // ===== MATCH AEROPUERTO =====
+        const airportMatchPairs = [
+            ['Airport', 'Aeropuerto'],
+            ['Luggage', 'Equipaje'],
+            ['Gate', 'Puerta de embarque'],
+            ['Flight', 'Vuelo'],
+            ['Passport', 'Pasaporte']
+        ];
+        let selectedWordElement = null;
+        let matchCount = 0;
+
+        function startMatch() {
+            showScreen('match');
+            selectedWordElement = null;
+            matchCount = 0;
+
+            const shuffledWords = [...airportMatchPairs].sort(() => Math.random() - 0.5);
+            const shuffledDefs = [...airportMatchPairs].sort(() => Math.random() - 0.5);
+
+            const wordList = document.getElementById('wordList');
+            const defList = document.getElementById('definitionList');
+            wordList.innerHTML = '';
+            defList.innerHTML = '';
+            document.getElementById('matchFeedback').textContent = 'Selecciona una palabra y luego su significado.';
+
+            shuffledWords.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'match-item';
+                el.textContent = p[0];
+                el.dataset.id = p[0];
+                el.onclick = () => selectWord(el);
+                wordList.appendChild(el);
+            });
+
+            shuffledDefs.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'match-item';
+                el.textContent = p[1];
+                el.dataset.id = p[0];
+                el.onclick = () => selectDefinition(el);
+                defList.appendChild(el);
+            });
+        }
+
+        function selectWord(el) {
+            if (el.classList.contains('matched')) return;
+            document.querySelectorAll('#wordList .match-item').forEach(x => x.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedWordElement = el;
+        }
+
+        function selectDefinition(el) {
+            if (!selectedWordElement || el.classList.contains('matched')) return;
+
+            if (selectedWordElement.dataset.id === el.dataset.id) {
+                selectedWordElement.classList.remove('selected');
+                selectedWordElement.classList.add('matched');
+                el.classList.add('matched');
+                matchCount++;
+                selectedWordElement = null;
+                document.getElementById('matchFeedback').textContent = '✅ ¡Bien emparejado!';
+
+                if (matchCount === airportMatchPairs.length) {
+                    setTimeout(() => completeModule('airport', 'match'), 600);
+                }
+            } else {
+                document.getElementById('matchFeedback').textContent = '❌ Intenta de nuevo. Piensa en el significado de la palabra.';
+                selectedWordElement.classList.remove('selected');
+                selectedWordElement = null;
+            }
+        }
+
+        // ===== MATCH HOTEL =====
+        const hotelMatchPairs = [
+            ['Hotel', 'Hotel'],
+            ['Room', 'Habitación'],
+            ['Reservation', 'Reservación'],
+            ['Key', 'Llave'],
+            ['Breakfast', 'Desayuno']
+        ];
+        let selectedHotelWord = null;
+        let hotelMatchCount = 0;
+
+        function startHotelMatch() {
+            showScreen('matchHotel');
+            selectedHotelWord = null;
+            hotelMatchCount = 0;
+
+            const shuffledWords = [...hotelMatchPairs].sort(() => Math.random() - 0.5);
+            const shuffledDefs = [...hotelMatchPairs].sort(() => Math.random() - 0.5);
+
+            const wordList = document.getElementById('wordListHotel');
+            const defList = document.getElementById('definitionListHotel');
+            wordList.innerHTML = '';
+            defList.innerHTML = '';
+            document.getElementById('matchHotelFeedback').textContent = 'Selecciona una palabra y luego su significado.';
+
+            shuffledWords.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'match-item';
+                el.textContent = p[0];
+                el.dataset.id = p[0];
+                el.onclick = () => selectHotelWord(el);
+                wordList.appendChild(el);
+            });
+
+            shuffledDefs.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'match-item';
+                el.textContent = p[1];
+                el.dataset.id = p[0];
+                el.onclick = () => selectHotelDefinition(el);
+                defList.appendChild(el);
+            });
+        }
+
+        function selectHotelWord(el) {
+            if (el.classList.contains('matched')) return;
+            document.querySelectorAll('#wordListHotel .match-item').forEach(x => x.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedHotelWord = el;
+        }
+
+        function selectHotelDefinition(el) {
+            if (!selectedHotelWord || el.classList.contains('matched')) return;
+
+            if (selectedHotelWord.dataset.id === el.dataset.id) {
+                selectedHotelWord.classList.remove('selected');
+                selectedHotelWord.classList.add('matched');
+                el.classList.add('matched');
+                hotelMatchCount++;
+                selectedHotelWord = null;
+                document.getElementById('matchHotelFeedback').textContent = '✅ ¡Bien emparejado!';
+
+                if (hotelMatchCount === hotelMatchPairs.length) {
+                    setTimeout(() => completeModule('hotel', 'match'), 600);
+                }
+            } else {
+                document.getElementById('matchHotelFeedback').textContent = '❌ Intenta de nuevo. Piensa en el significado de la palabra.';
+                selectedHotelWord.classList.remove('selected');
+                selectedHotelWord = null;
+            }
+        }
+
+        // ===== INIT =====
+        updateStats();
+    </script>
+</body>
+
+</html>
