@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portafolio de Innovación Educativa</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f8;
+    color: #263238;
+}
+
+/* PORTADA */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+
+    background: linear-gradient(
+        135deg,
+        #00695c,
+        #26a69a,
+        #80cbc4
+    );
+
+    color: white;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    background: white;
+    color: #00695c;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* NAVEGACIÓN */
+
+nav {
+    background: #004d40;
+    padding: 18px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #80cbc4;
+}
+
+/* CONTENEDOR */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 20px;
+}
+
+section {
+    background: white;
+    padding: 45px;
+    margin-bottom: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+section h2 {
+    color: #00695c;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* TARJETAS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 25px;
+    background: #e0f2f1;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card h3 {
+    color: #00695c;
+    margin-bottom: 10px;
+}
+
+/* INTEGRANTES */
+
+.team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.member {
+    background: #f1f8f7;
+    padding: 25px;
+    text-align: center;
+    border-radius: 15px;
+}
+
+/* BOTONES */
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.link-btn {
+    background: #00796b;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.link-btn:hover {
+    background: #004d40;
+}
+
+/* FOOTER */
+
+footer {
+    background: #004d40;
+    color: white;
+    text-align: center;
+    padding: 35px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 8px;
+    }
+
+    section {
+        padding: 25px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PORTADA -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <h1>Portafolio Digital</h1>
+
+        <p>
+            Proyecto Colaborativo de Innovación Educativa
+        </p>
+
+        <p>
+            Una experiencia de aprendizaje desarrollada mediante Design Thinking
+        </p>
+
+        <a href="#proyecto" class="btn">
+            Explorar portafolio
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- MENÚ -->
+
+<nav>
+
+    <a href="#proyecto">Proyecto</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#design">Design Thinking</a>
+    <a href="#prototipo">Prototipo</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#video">Video Pitch</a>
+    <a href="#informe">Informe</a>
+
+</nav>
+
+
+<main class="container">
+
+
+<!-- INFORMACIÓN DEL PROYECTO -->
+
+<section id="proyecto">
+
+    <h2>💡 Nuestro Proyecto</h2>
+
+    <p>
+        En esta sección se presenta el proyecto de innovación educativa,
+        el problema identificado y la solución propuesta.
+    </p>
+
+</section>
+
+
+<!-- EQUIPO -->
+
+<section id="equipo">
+
+    <h2>👥 Equipo de Trabajo</h2>
+
+    <div class="team">
+
+        <div class="member">
+            <h3>Integrante 1</h3>
+            <p>Rol dentro del proyecto</p>
+        </div>
+
+        <div class="member">
+            <h3>Integrante 2</h3>
+            <p>Rol dentro del proyecto</p>
+        </div>
+
+        <div class="member">
+            <h3>Integrante 3</h3>
+            <p>Rol dentro del proyecto</p>
+        </div>
+
+        <div class="member">
+            <h3>Integrante 4</h3>
+            <p>Rol dentro del proyecto</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DESIGN THINKING -->
+
+<section id="design">
+
+    <h2>🧠 Proceso Design Thinking</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>01. Empatizar</h3>
+            <p>
+                Investigación y comprensión de las necesidades de los usuarios.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>02. Definir</h3>
+            <p>
+                Identificación y formulación del problema principal.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>03. Idear</h3>
+            <p>
+                Generación de ideas y posibles soluciones.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>04. Prototipar</h3>
+            <p>
+                Creación de una primera versión de la solución.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>05. Testear</h3>
+            <p>
+                Prueba del prototipo y recopilación de retroalimentación.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROTOTIPO -->
+
+<section id="prototipo">
+
+    <h2>🛠️ Prototipo</h2>
+
+    <p>
+        Aquí se presenta el prototipo o solución desarrollada.
+    </p>
+
+    <br>
+
+    <a href="#" class="link-btn">
+        Ver prototipo
+    </a>
+
+</section>
+
+
+<!-- RECURSOS -->
+
+<section id="recursos">
+
+    <h2>🔗 Recursos Digitales</h2>
+
+    <div class="links">
+
+        <a href="#" class="link-btn">
+            🌐 Página Web
+        </a>
+
+        <a href="#" class="link-btn">
+            🎮 Aplicación
+        </a>
+
+        <a href="#" class="link-btn">
+            📝 Formulario
+        </a>
+
+        <a href="#" class="link-btn">
+            📊 Presentación
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- VIDEO -->
+
+<section id="video">
+
+    <h2>🎥 Video Pitch</h2>
+
+    <p>
+        Presentación audiovisual del proyecto de innovación.
+    </p>
+
+    <br>
+
+    <a href="#" class="link-btn">
+        Ver Video Pitch
+    </a>
+
+</section>
+
+
+<!-- INFORME -->
+
+<section id="informe">
+
+    <h2>📚 Informe Académico</h2>
+
+    <p>
+        Informe escrito del proyecto de innovación educativa,
+        elaborado bajo las normas APA 7.ª edición.
+    </p>
+
+    <br>
+
+    <a href="#" class="link-btn">
+        Ver Informe
+    </a>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Portafolio Digital de Innovación Educativa
+    </p>
+
+    <p>
+        Proyecto colaborativo
+    </p>
+
+</footer>
+
+</body>
+</html>
